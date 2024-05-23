@@ -1,4 +1,6 @@
 package com.mavericklovy.proyectofinaldemayo
 
-class algo {
+class algo2 {
+
+//    funcion algo
 }
