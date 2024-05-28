@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "141074316440",
+    "project_id": "mayoappinfobd",
+    "storage_bucket": "mayoappinfobd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:141074316440:android:6820fa08459f921fc5e4ed",
+        "android_client_info": {
+          "package_name": "com.mavericklovy.proyectofinaldemayo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBR5CYVlP_561F_SE8xCTjD1f-DICI4wdk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
