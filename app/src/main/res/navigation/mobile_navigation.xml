@@ -22,4 +22,9 @@
         android:name="com.mavericklovy.proyectofinaldemayo.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_delete"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/favoriteSongsFragment"
+        android:name="com.mavericklovy.proyectofinaldemayo.ui.favorite.FavoriteSongsFragment"
+        android:label="fragment_favorite_songs"
+        tools:layout="@layout/fragment_favorite_songs" />
 </navigation>
