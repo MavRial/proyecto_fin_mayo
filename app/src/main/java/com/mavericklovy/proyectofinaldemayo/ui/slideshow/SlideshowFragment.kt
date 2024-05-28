@@ -28,10 +28,9 @@ class SlideshowFragment : Fragment() {
         _binding = FragmentSlideshowBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textSlideshow
-        slideshowViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+
+
+
         return root
     }
 
@@ -39,4 +38,5 @@ class SlideshowFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }
