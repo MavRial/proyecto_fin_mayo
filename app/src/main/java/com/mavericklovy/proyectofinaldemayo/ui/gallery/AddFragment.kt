@@ -18,12 +18,13 @@ import com.mavericklovy.proyectofinaldemayo.Data.Adapter.homeAdapter.sectionSong
 import com.mavericklovy.proyectofinaldemayo.Data.DTO.Models.CategoryModel
 import com.mavericklovy.proyectofinaldemayo.Data.DTO.Models.SongModel
 import com.mavericklovy.proyectofinaldemayo.R
-import com.mavericklovy.proyectofinaldemayo.databinding.FragmentGalleryBinding
+import com.mavericklovy.proyectofinaldemayo.databinding.FragmentAddBinding
+
 import com.mavericklovy.proyectofinaldemayo.ui.songs.SongsFragment
 
 class AddFragment : Fragment() {
 
-    private var _binding: FragmentGalleryBinding? = null
+    private var _binding: FragmentAddBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -37,7 +38,7 @@ class AddFragment : Fragment() {
         val addViewModel =
             ViewModelProvider(this).get(AddViewModel::class.java)
 
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentAddBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
