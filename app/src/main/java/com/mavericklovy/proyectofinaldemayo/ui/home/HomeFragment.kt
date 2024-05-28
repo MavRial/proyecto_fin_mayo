@@ -1,28 +1,41 @@
 package com.mavericklovy.proyectofinaldemayo.ui.home
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.widget.RelativeLayout
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.mavericklovy.proyectofinaldemayo.Data.Adapter.homeAdapter.categoryAdapter
+import com.google.firebase.firestore.Query
+import com.google.firebase.firestore.toObject
+import com.google.firebase.firestore.toObjects
+import com.mavericklovy.proyectofinaldemayo.Data.Adapter.homeAdapter.category.categoryAdapter
+import com.mavericklovy.proyectofinaldemayo.Data.Adapter.homeAdapter.favorite.favoriteAdapter
+import com.mavericklovy.proyectofinaldemayo.Data.Adapter.homeAdapter.sectionSongs.sectionListAdapter
+import com.mavericklovy.proyectofinaldemayo.Data.Adapter.songListAdapter.songsListAdapter
 import com.mavericklovy.proyectofinaldemayo.Data.DTO.Models.CategoryModel
+import com.mavericklovy.proyectofinaldemayo.Data.DTO.Models.SongModel
+import com.mavericklovy.proyectofinaldemayo.Data.Services.MyExoPlayer
+import com.mavericklovy.proyectofinaldemayo.R
 import com.mavericklovy.proyectofinaldemayo.databinding.FragmentHomeBinding
-import com.mavericklovy.proyectofinaldemayo.ui.favorite.FavoriteSongsFragment
+import com.mavericklovy.proyectofinaldemayo.ui.Player.PlayerFragment
+import com.mavericklovy.proyectofinaldemayo.ui.songs.SongsFragment
 
 class HomeFragment : Fragment() {
+
+
     private val viewModel by lazy {ViewModelProvider(this).get(HomeViewModel::class.java)}
 
     private var categoryList:MutableList<CategoryModel> = mutableListOf()
     private lateinit var adapterCategory : categoryAdapter
+
     private var categoryllmanager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
 
 
@@ -45,60 +58,7 @@ class HomeFragment : Fragment() {
 
 
         getCategories()
-
-
-
-
-
-//        homeViewModel.fetchCategoryData().observe(cont, Observer { state ->
-//            when (state) {
-//                is State.Loading -> {
-//                    // Mostrar loading
-////                    binding.progressBar.visibility = View.VISIBLE
-//                    binding.rvCategories.visibility = View.INVISIBLE
-//                }
-//                is State.Success -> {
-////                    binding.progressBar.visibility = View.GONE
-//                    // Mostrar datos de éxito
-//                    categoryList = mutableListOf()
-//                    state?.info?.message?.forEach {
-//                        categoryList.add(CategoryModel(coverUrl = it, name = it))
-//                    }
-//                    initRecyclerView()
-//                    binding.rvCategories.visibility = View.VISIBLE
-//                }
-//                is State.Error -> {
-//                    // Mostrar mensaje de error
-////                    binding.progressBar.visibility = View.GONE
-//                    Toast.makeText(context,state.message, Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        })
-
-
-
-//        homeViewModel.listState.observe(viewLifecycleOwner){
-//            madapter?.setItem(list = it)
-//            binding.progress.isInvisible = true
-
-//        }
-//
-//        homeViewModel.listState.observe(viewLifecycleOwner){show ->
-//            binding.progress.isInvisible = true
-//
-//        }
-
-//        viewModel.fechProductoData()
-
-
-
-
-
-
-
-
-
-
+        sectionInit()
 
 
         return root
@@ -109,56 +69,90 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    fun observe(){
-        viewModel.fetchCategoryData()
-        adapterCategory.setlist(categoryList)
-        adapterCategory.notifyDataSetChanged()
-    }
 
-//    fun setCategoryData(data:MutableList<CategoryModel>){
-//        categoryList = data
-//    }
+
+    fun sectionInit(){
+        initSections("section_1",binding.section1MainLayout,binding.tvSection1Title,binding.rvSection1)
+        initSections("section_2",binding.section2MainLayout,binding.tvSection2Title,binding.rvSection2)
+        initSections("section_3",binding.section3MainLayout,binding.tvSection3Title,binding.rvSection3)
+        initMostlyPlayed("mostly_played",binding.moslyPlayedMainLayout,binding.moslyPlayedTitle,binding.rvMoslyPlayed)
+    }
 
     fun getCategories(){
         FirebaseFirestore.getInstance().collection("category")
             .get().addOnSuccessListener {
                 val categoryList = it.toObjects(CategoryModel::class.java)
-                setupCategoryRecyclerView(categoryList)
+                initCategoryRecyclerView(categoryList)
             }
     }
 
-    fun setupCategoryRecyclerView(categoryList : List<CategoryModel>){
+    fun initCategoryRecyclerView(categoryList : List<CategoryModel>){
         adapterCategory = categoryAdapter(
-            categoryList,
-//            onClickListener = { category -> categoryOnItemSelected(category)}
+            categoryList
+
             )
         binding.rvCategories.adapter = adapterCategory
-        binding.rvCategories.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+        binding.rvCategories.layoutManager = categoryllmanager
 
     }
 
 
-//    private fun categoryOnItemSelected(category: CategoryModel) {
-//        val intent = Intent(context, FavoriteSongsFragment::class.java)
-//        intent.putExtra("data", category.coverUrl )
-//
-//
-//
-//
-//
-//        startActivity(intent)
-//
-//
-//        }
+    fun initSections(id:String, mainLayout : RelativeLayout,titleView:TextView,recyclerView:RecyclerView){
+        FirebaseFirestore.getInstance().collection("sections")
+            .document(id)
+            .get().addOnSuccessListener {
+                val section = it.toObject(CategoryModel::class.java)
+                section?.apply {
+                    mainLayout.visibility = View.VISIBLE
+                    titleView.text = section.name
+                    recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+                    recyclerView.adapter = sectionListAdapter(songs)
 
+                    mainLayout.setOnClickListener(object : View.OnClickListener{
+                            override fun onClick(v: View?) {
+                                val activity = v!!.context as AppCompatActivity
+                                val songsFragment = SongsFragment()
+                                SongsFragment.category = section
+                                activity.supportFragmentManager.beginTransaction().replace(R.id.drawer_layout,songsFragment).addToBackStack(null).commit()
+
+                            }
+                    })
+                }
+            }
     }
 
+    fun initMostlyPlayed(id:String, mainLayout : RelativeLayout,titleView:TextView,recyclerView:RecyclerView){
+        FirebaseFirestore.getInstance().collection("sections")
+            .document(id)
+            .get().addOnSuccessListener {
+                //get mostly played songs
+                FirebaseFirestore.getInstance().collection("Songs")
+                    .orderBy("count",Query.Direction.DESCENDING)
+                    .limit(5)
+                    .get().addOnSuccessListener {songListSnapshot ->
+                     val songsModelList = songListSnapshot.toObjects<SongModel>()
+                     val songsIdList = songsModelList.map {
+                         it.id
+                     }.toList()
+                        var section = it.toObject(CategoryModel::class.java)
+                        section?.apply {
+                            mainLayout.visibility = View.VISIBLE
+                            titleView.text = name
+                            recyclerView.layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+                            recyclerView.adapter = sectionListAdapter(songsIdList)
+                            section.songs = songsIdList
+                            mainLayout.setOnClickListener(object : View.OnClickListener{
+                                override fun onClick(v: View?) {
+                                    val activity = v!!.context as AppCompatActivity
+                                    val songsFragment = SongsFragment()
+                                    SongsFragment.category = section
+                                    activity.supportFragmentManager.beginTransaction().replace(R.id.drawer_layout,songsFragment).addToBackStack(null).commit()
 
-//    override fun itemSelect(producto: producto) {
-//        viewModel.setItemSelection()
-//        activity?.supportFragmentManager
-//            ?.beginTransaction()
-//            ?.replace(android.R.id.content, GalleryFragment.newInstance() )
-//            ?.addToBackStack(null)
-//            ?.commit()
-//    }
+                                }
+                            })
+                        }
+                    }
+            }
+    }
+}
+

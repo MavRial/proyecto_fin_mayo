@@ -29,6 +29,8 @@ class SlideshowFragment : Fragment() {
         val root: View = binding.root
 
 
+
+
         return root
     }
 

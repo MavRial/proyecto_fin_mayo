@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/favoriteSongsFragment"
-        android:name="com.mavericklovy.proyectofinaldemayo.ui.favorite.FavoriteSongsFragment"
+        android:name="com.mavericklovy.proyectofinaldemayo.ui.songs.SongsFragment"
         android:label="fragment_favorite_songs"
-        tools:layout="@layout/fragment_favorite_songs" />
+        tools:layout="@layout/fragment_songs" />
 </navigation>

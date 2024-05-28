@@ -28,7 +28,7 @@ class HomeViewModel : ViewModel()  {
 //        _data.postValue(State.Loading)
 //        viewModelScope.launch(Dispatchers.IO){
 //            try {
-//                val service = MusicGenApi
+//                val service = MusicGenApi.service
 //                val response = service.get(3)
 //                val call = response.execute().body()
 //                //Log.i("HOLA",call.toString())
