@@ -1,25 +1,18 @@
 package com.mavericklovy.proyectofinaldemayo.ui.Player
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
 import com.mavericklovy.proyectofinaldemayo.Data.Services.MyExoPlayer
 import com.mavericklovy.proyectofinaldemayo.R
 import com.mavericklovy.proyectofinaldemayo.databinding.FragmentPlayerBinding
-import com.mavericklovy.proyectofinaldemayo.databinding.FragmentSlideshowBinding
-import com.mavericklovy.proyectofinaldemayo.ui.slideshow.SlideshowViewModel
-import com.mavericklovy.proyectofinaldemayo.ui.songs.SongsFragment
+import com.mavericklovy.proyectofinaldemayo.ui.Delete.DeleteViewModel
 
 class PlayerFragment : Fragment() {
 
@@ -45,7 +38,7 @@ class PlayerFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         val playerViewModel =
-            ViewModelProvider(this).get(SlideshowViewModel::class.java)
+            ViewModelProvider(this).get(DeleteViewModel::class.java)
 
         _binding = FragmentPlayerBinding.inflate(inflater, container, false)
         val root: View = binding.root

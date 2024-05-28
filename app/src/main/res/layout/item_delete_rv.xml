@@ -19,23 +19,14 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/bt_favorite_off"
+        android:id="@+id/bt_delete"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/empty_heart"/>
+        android:src="@drawable/delete"/>
 
-    <ImageView
-        android:id="@+id/bt_favorite_on"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="10dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/filled_heart"
-        android:visibility="gone"/>
 
     <TextView
         android:layout_width="140dp"
@@ -46,7 +37,7 @@
         android:layout_marginStart="10dp"
         android:textColor="@color/white"
         android:id="@+id/tv_section_title"
-        app:layout_constraintTop_toBottomOf="@id/favorite_off"
+        app:layout_constraintTop_toBottomOf="@id/bt_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/iv_section_cover"/>
     <TextView

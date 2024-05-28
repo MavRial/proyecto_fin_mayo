@@ -1,13 +1,13 @@
-package com.mavericklovy.proyectofinaldemayo.ui.slideshow
+package com.mavericklovy.proyectofinaldemayo.ui.Add
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class SlideshowViewModel : ViewModel() {
+class AddViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is slideshow Fragment"
+        value = "This is gallery Fragment"
     }
     val text: LiveData<String> = _text
 }

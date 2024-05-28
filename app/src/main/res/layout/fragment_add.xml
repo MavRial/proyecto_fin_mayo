@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#383F45"
-    tools:context=".ui.gallery.AddFragment">
+    tools:context=".ui.Add.AddFragment">
 
     <RelativeLayout
         android:id="@+id/relative_add_category"

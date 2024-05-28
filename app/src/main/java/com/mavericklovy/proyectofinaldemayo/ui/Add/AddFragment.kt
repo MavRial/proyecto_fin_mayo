@@ -1,4 +1,4 @@
-package com.mavericklovy.proyectofinaldemayo.ui.gallery
+package com.mavericklovy.proyectofinaldemayo.ui.Add
 
 import android.os.Bundle
 import android.view.LayoutInflater
