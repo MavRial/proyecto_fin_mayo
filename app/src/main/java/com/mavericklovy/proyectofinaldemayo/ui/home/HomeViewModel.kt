@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel : ViewModel()  {
 
-    private val repository = MusicGenApi()
+//    private val repository = MusicGenApi()
 //    fun fetchCategoryData(): LiveData<MutableList<CategoryModel>>{
 //        val mutableData = MutableLiveData<MutableList<CategoryModel>>()
 //        repository.getCategoryData().observeForever{category ->
